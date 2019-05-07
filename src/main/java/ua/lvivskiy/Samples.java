@@ -6,6 +6,7 @@ import java.util.StringJoiner;
 /**
  * TODO: watch https://www.youtube.com/watch?v=AxL5LgoQyNs and read about changes in Java 8
  * TODO: read about Java9 CompactString
+ * testqaengineerautomation@gmail.com  miramusic5555557
  */
 public class Samples {
 
