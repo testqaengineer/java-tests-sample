@@ -1,4 +1,4 @@
-package ua.lvivskiy;
+git package ua.lvivskiy;
 
 import java.util.Arrays;
 import java.util.StringJoiner;
