@@ -1,4 +1,4 @@
-package main.java.ua.lvivskiy.v.dembovskiy;
+package ua.lvivskiy.v_dembovskiy;
 
 public class Car {
 private String model;
