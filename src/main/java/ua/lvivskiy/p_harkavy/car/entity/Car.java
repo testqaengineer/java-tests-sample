@@ -1,6 +1,6 @@
 package ua.lvivskiy.p_harkavy.car.entity;
 
-import ua.lvivskiy.p_harkavy.car.exception.IgnitionOnException;
+import ua.lvivskiy.p_harkavy.car.exception.IgnitionException;
 
 //todo: refactor tankVolume, fuelLevel to double type (read, how to compare doubles in Java)
 public class Car {
@@ -61,10 +61,6 @@ public class Car {
         return isIgnitionOn;
     }
 
-    public void setIgnitionOn(boolean ignitionOn) {
-        isIgnitionOn = ignitionOn;
-    }
-
     public int getOdo() {
         return odo;
     }
@@ -81,17 +77,29 @@ public class Car {
         this.fuelLevel = fuelLevel;
     }
 
+    public void startEngine() throws IgnitionException {
+        if (fuelLevel <= 0) {
+            throw new IgnitionException("Can't start car engine - no fuel!");
+        }
+
+        isIgnitionOn = true;
+    }
+
+    public void stopEngine() {
+        isIgnitionOn = false;
+    }
+
     /**
      * @return liters were added to the car
      * todo: use double instead of int
      */
-    public int refuel(int liters) throws IgnitionOnException {
+    public int refuel(int liters) throws IgnitionException {
         if (liters < 1) {
             throw new IllegalArgumentException("Can't refuel car on liters: " + liters);
         }
 
         if (isIgnitionOn) {
-            throw new IgnitionOnException("Can't refuel car - ignition is ON");
+            throw new IgnitionException("Can't refuel car - ignition is ON");
         }
 
         int freeVolume = tankVolume - fuelLevel;

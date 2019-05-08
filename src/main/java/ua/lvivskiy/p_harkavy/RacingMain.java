@@ -1,7 +1,7 @@
 package ua.lvivskiy.p_harkavy;
 
 import ua.lvivskiy.p_harkavy.car.entity.Car;
-import ua.lvivskiy.p_harkavy.car.exception.IgnitionOnException;
+import ua.lvivskiy.p_harkavy.car.exception.IgnitionException;
 
 /**
  * todo: will be done later
@@ -13,8 +13,8 @@ public class RacingMain {
 
         try {
             car1.refuel(1);
-        } catch (IgnitionOnException e) {
-            car1.setIgnitionOn(false);
+        } catch (IgnitionException e) {
+            car1.stopEngine();
 
             car1.refuel(1);
         }
