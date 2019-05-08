@@ -1,4 +1,4 @@
-package main.java.ua.lvivskiy;
+package ua.lvivskiy;
 
 public class NotMain {
 
