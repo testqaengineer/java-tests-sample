@@ -1,26 +1,26 @@
-package java.ua.lvivskiy.p_harkavy;
+package ua.lvivskiy.p_harkavy;
 
-import java.ua.lvivskiy.p_harkavy.lunohod.entity.Lunohod;
-import java.ua.lvivskiy.p_harkavy.lunohod.exception.LunohodRefuelingException;
+import ua.lvivskiy.p_harkavy.moonrider.entity.Moonrider;
+import ua.lvivskiy.p_harkavy.moonrider.exception.MoonriderRefuelingException;
 
 
 public class OffRoadMain {
 
     public static void main(String[] args) {
-        Lunohod.MakeModelColor makeModelColor1 = new Lunohod.MakeModelColor("lunohod", "0", "metallic");
-        Lunohod lunohod0 = new Lunohod (makeModelColor1, 60, 1000, 600);
+        Moonrider.MakeModelColor makeModelColor1 = new Moonrider.MakeModelColor("moonrider", "0", "metallic");
+        Moonrider lunohod0 = new Moonrider(makeModelColor1, 60, 1000, 600);
 
-        Lunohod.MakeModelColor makeModelColor2 = new Lunohod.MakeModelColor("lunohod", "0", "dark-orange");
-        Lunohod lunohod1 = new Lunohod (makeModelColor2, 50, 1200, 500);
+        Moonrider.MakeModelColor makeModelColor2 = new Moonrider.MakeModelColor("moonrider", "0", "dark-orange");
+        Moonrider lunohod1 = new Moonrider(makeModelColor2, 50, 1200, 500);
 
-        Lunohod.MakeModelColor makeModelColor3 = new Lunohod.MakeModelColor("lunohod", "0", "bright-blue");
-        Lunohod lunohod17 = new Lunohod (makeModelColor3, 50, 1200, 500);
+        Moonrider.MakeModelColor makeModelColor3 = new Moonrider.MakeModelColor("moonrider", "0", "bright-blue");
+        Moonrider lunohod17 = new Moonrider(makeModelColor3, 50, 1200, 500);
 
-        Lunohod.MakeModelColor makeModelColor4 = new Lunohod.MakeModelColor("lunohod", "0", "cosmic");
-        Lunohod lunohod2 = new Lunohod (makeModelColor4, 45, 1400, 400);
+        Moonrider.MakeModelColor makeModelColor4 = new Moonrider.MakeModelColor("moonrider", "0", "bright-blue");
+        Moonrider lunohod2 = new Moonrider(makeModelColor4, 45, 1400, 400);
 
-        Lunohod.MakeModelColor makeModelColor5 = new Lunohod.MakeModelColor("lunohod", "0", "x-rays");
-        Lunohod lunohod3 = new Lunohod (makeModelColor5, 40, 1600, 450);
+        Moonrider.MakeModelColor makeModelColor5 = new Moonrider.MakeModelColor("moonrider", "0", "x-rays");
+        Moonrider lunohod3 = new Moonrider(makeModelColor5, 40, 1600, 450);
 
         /**
          * CONFLICT (add/add): Merge conflict in src/test/java/ua/lvivskiy/p_harkavy/car/entity/CarTest.java
@@ -35,12 +35,11 @@ public class OffRoadMain {
          Auto-merging .idea/misc.xml
          CONFLICT (content): Merge conflict in .idea/misc.xml
          Automatic merge failed; fix conflicts and then commit the result.
-            **/
+         **/
 
         try {
             lunohod0.refuel(1);
-        }
-        catch (LunohodRefuelingException e) {
+        } catch (MoonriderRefuelingException e) {
             lunohod0.setIgnitionOn(false);
             lunohod0.refuel(1);
         }
@@ -51,16 +50,7 @@ public class OffRoadMain {
         lunohod0.ride(400);
 
 
-
-
-
-
     }
-
-
-
-
-
 
 
 }
