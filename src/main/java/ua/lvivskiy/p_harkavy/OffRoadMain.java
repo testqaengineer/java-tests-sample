@@ -1,6 +1,6 @@
 package ua.lvivskiy.p_harkavy;
 
-import ua.lvivskiy.p_harkavy.moonrider.entity.Moonrider;
+import ua.lvivskiy.p_harkavy.moonrider.Moonrider;
 import ua.lvivskiy.p_harkavy.moonrider.exception.MoonriderRefuelingException;
 
 

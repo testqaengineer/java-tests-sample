@@ -1,4 +1,4 @@
-package ua.lvivskiy.p_harkavy.moonrider.entity;
+package ua.lvivskiy.p_harkavy.moonrider;
 
 import ua.lvivskiy.p_harkavy.moonrider.exception.MoonriderOdoException;
 import ua.lvivskiy.p_harkavy.moonrider.exception.MoonriderRefuelingException;
@@ -123,6 +123,23 @@ public class Moonrider {
             return currFuel;
         }
     }
+
+    /**
+     * @param road - instance of class {@link Road}, that encapsulates distance and road type.
+     * Road type is a coefficient of fuel consumption,
+     * example: for dirt road car consumes 1.2x of standard consumption,
+     * for highway car consumes 0.9x respectively.
+     * @param rideUntilFuelRunsOut - if 'true', rides  any distance as long as there is fuel
+     * - if 'false' - throws exception, if there's no enough fuel to ride requested distance
+     * todo: Define it!
+     * @return distance was ridden
+     */
+
+
+
+
+
+
 
 
     //Если да - то это очень неэфективно, ты же сразу модешь понять, на сколько увеличится одо и насколько уменьшится fuelLevel
