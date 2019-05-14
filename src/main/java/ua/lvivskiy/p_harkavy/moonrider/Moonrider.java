@@ -5,7 +5,7 @@ import ua.lvivskiy.p_harkavy.moonrider.exception.MoonriderRefuelingException;
 
 public class Moonrider {
 
-    // ДЗ1:
+    // ДЗ2:
     // Написать класс Moonrider (model, color, fuel consumption, odo(одометр), curr fuel level, tank volume, ignition (on/off))
     // машины должны ездить(только если заведены), методы: turnOn(startEngine), turnOff(stopEngine), ride(distance), refuel(liters)
     // Конструкторы должны быть с перегрузкой (сделать возможность создавать с дефолтными tank fuel volume и fuel consumption
@@ -15,7 +15,7 @@ public class Moonrider {
     // бросать исключение (подумать, какое - checked или unchecked, посмотреть иерархию,
     // почитать про них, посмотреть головача на ютубе, (если не хватило бензина на всю дистанцию)
 
-    // ДЗ2:
+    // ДЗ3:
     // 1. Вызучить возможные библиотеки для юнит тестов, все самые используемые, разницу тестНЖ и ДжиЮнит (дифф 4 и 5 версии)
     // 2. Жизненный цикл мавен детально изучить, прописывание скоупов в поме
     // 2. Покрыть юниттестами Car Тесты не должны зависеть один от другого и от порядка выполнения.
@@ -86,6 +86,9 @@ public class Moonrider {
         this.tankVolume = tankVolume;
         this.currFuel = currFuel;
     }
+    public double getCurrFuel() {
+        return currFuel;
+    }
 
     public void setIgnitionOn(boolean ignitionOn) {
         isIgnitionOn = ignitionOn;
@@ -101,11 +104,35 @@ public class Moonrider {
         }
     }
 
+    public boolean isIgnitionOn() {
+        return isIgnitionOn;
+    }
+
+    public int getTankVolume() {
+        return tankVolume;
+    }
+
+
+
+
+
     public int getDistance() {
         return distance;
     }
 
-    public int refuel(int liters) throws MoonriderRefuelingException {//return liters which was added to car after refueling (or specified or full tank)
+    public int getFuelConsump() {
+        return fuelConsump;
+    }
+
+    public int getOdo() {
+        return odo;
+    }
+
+
+
+
+
+    public double refuel(double liters) throws MoonriderRefuelingException {//return liters which was added to car after refueling (or specified or full tank)
         System.out.println();
         System.out.println("NEXT MOONRIDER PREPARE TO TRIP ON " + getDistance());
         if (liters < 1) {
