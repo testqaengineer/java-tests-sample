@@ -1,21 +1,24 @@
 package ua.lvivskiy.v_dembovskiy.car.entity;
 
+import ua.lvivskiy.v_dembovskiy.car.exeption.IgnitionOffException;
 import ua.lvivskiy.v_dembovskiy.car.exeption.IgnitionOnException;
 import ua.lvivskiy.v_dembovskiy.car.exeption.OutOfFuelException;
 
-import java.math.BigDecimal;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 public class Car {
 
     private static final int DEFAULT_TANK_VOLUME = 40;
-    private static final int DEFAULT_FUEL_CONSUMPTION = 10;
+    private static final double DEFAULT_FUEL_CONSUMPTION_PER_KM = 10.0;
     private String model;
     private String color;
     private int odo;
     private double currFuelLevel;
     private double tankVolume;
     private boolean isIgnitionOn;
-    private int fuelConsumption;
+    private double fuelConsumptionPer100Km;
+    private double consumptionLitersPer1Km;
+
 
     public Car(MakesModels makesModels, int odo, double currFuelLevel) {
         if (currFuelLevel < 0) {
@@ -28,20 +31,23 @@ public class Car {
         setColor(makesModels.color);
         this.odo = odo;
         this.tankVolume = makesModels.tankVolume;
-        this.fuelConsumption = DEFAULT_FUEL_CONSUMPTION;
+        this.fuelConsumptionPer100Km = DEFAULT_FUEL_CONSUMPTION_PER_KM;
+        this.consumptionLitersPer1Km = DEFAULT_FUEL_CONSUMPTION_PER_KM / 100.0;
         setCurrFuelLevel(currFuelLevel);
     }
 
-    public Car(MakesModels makesModels, int odo, double currFuelLevel, int fuelConsumption) {
+    public Car(MakesModels makesModels, int odo, double currFuelLevel, double fuelConsumptionPer100Km) {
         this(makesModels, odo, currFuelLevel);
-        if (fuelConsumption < 0) {
-            throw new IllegalArgumentException("The fuelConsuption can`t be below 0");
+        if (fuelConsumptionPer100Km < 0) {
+
+            throw new IllegalArgumentException("The fuel Consuption can`t be below 0");
         }
-        this.fuelConsumption = fuelConsumption;
+        this.fuelConsumptionPer100Km = fuelConsumptionPer100Km;
+        this.consumptionLitersPer1Km = fuelConsumptionPer100Km / 100.0;
     }
 
-    public Car(MakesModels makesModels, int odo, double currFuelLevel, int fuelConsumption, boolean iSIgnitionOn) {
-        this(makesModels, odo, currFuelLevel, fuelConsumption);
+    public Car(MakesModels makesModels, int odo, double currFuelLevel, double fuelConsumptionPer100Km, boolean iSIgnitionOn) {
+        this(makesModels, odo, currFuelLevel, fuelConsumptionPer100Km);
         setIsIgnitionOn(iSIgnitionOn);
     }
 
@@ -51,12 +57,17 @@ public class Car {
         double tankVolume;
 
         public MakesModels(String model, String color, double tankVolume) {
+
             if (tankVolume < 1.0) {
+
                 throw new IllegalArgumentException("Tank fuel volume can't be less, than 1 liter");
             }
-            if (model == null || model.isEmpty() || model.equals(" ")) {
+
+            if (isBlank(model)) {
+
                 throw new IllegalArgumentException("Car model can't be null or empty");
             }
+
             this.model = model;
             this.color = color;
             this.tankVolume = tankVolume;
@@ -84,6 +95,12 @@ public class Car {
     }
 
     public void setCurrFuelLevel(double currFuelLevel) {
+
+        if (currFuelLevel > tankVolume) {
+
+            throw new IllegalArgumentException("Current fuel level is more then than volume");
+        }
+
         this.currFuelLevel = currFuelLevel;
     }
 
@@ -99,12 +116,16 @@ public class Car {
         this.isIgnitionOn = isIgnitionOn;
     }
 
-    public int getFuelConsumption() {
-        return fuelConsumption;
+    public double getFuelConsumptionPer100Km() {
+        return fuelConsumptionPer100Km;
     }
 
     public boolean getIsIgnitionOn() {
         return isIgnitionOn;
+    }
+
+    public double getConsumptionLitersPer1Km() {
+        return consumptionLitersPer1Km;
     }
 
     /**
@@ -113,16 +134,24 @@ public class Car {
      */
 
     public double refuel(double liters) throws IgnitionOnException {
+
         if (liters < 1.0) {
+
             throw new IllegalArgumentException("The liters value can't be less, than 1 liter ");
         }
+
         if (liters > tankVolume) {
+
             throw new IllegalArgumentException("The liters value can't be more then tankVolume");
         }
+
         if (isIgnitionOn) {
+
             throw new IgnitionOnException("Can't refuel car - ignition is ON");
         }
+
         double addedLiters;
+
         if (tankVolume < currFuelLevel + liters) {
             addedLiters = tankVolume - currFuelLevel;
             currFuelLevel = tankVolume;
@@ -130,45 +159,57 @@ public class Car {
             currFuelLevel += liters;
             addedLiters = liters;
         }
+
         return addedLiters;
     }
 
     /**
      * @return km, car has been ridden
      */
-    public int ride(int distanceKm) throws IgnitionOnException, OutOfFuelException {
-        int rode;
+    public int ride(int distanceKm) throws OutOfFuelException, IgnitionOffException {
+        int distanceWasRidden;
+
         if (distanceKm < 0) {
+
             throw new IllegalArgumentException("The distance can`t be below 0");
         }
+
         if (distanceKm == 0) {
-            rode = 0;
-        } else if (currFuelLevel / (fuelConsumption / 100.0) > distanceKm) {
-            startEngine();
-            rode = distanceKm;
-            currFuelLevel -= (double) fuelConsumption / 100.0 * distanceKm;
+            return 0;
+        }
+
+        if (!isIgnitionOn) {
+
+            throw new IgnitionOffException("The motor of the car is switched off");
+        } else if (currFuelLevel / consumptionLitersPer1Km > distanceKm) {
+            distanceWasRidden = distanceKm;
+            currFuelLevel -= consumptionLitersPer1Km * distanceKm;
             odo += distanceKm;
         } else {
             stopEngine();
-            rode = (int) (currFuelLevel / (fuelConsumption / 100.0));
+            distanceWasRidden = (int) (currFuelLevel / consumptionLitersPer1Km);
             currFuelLevel = 0.0;
-            odo += rode;
+            odo += distanceWasRidden;
+
             throw new OutOfFuelException("The fuel is over");
         }
-        return rode;
+
+        return distanceWasRidden;
     }
 
     public void startEngine() throws IgnitionOnException {
+
         if (currFuelLevel < 1.0) {
+
             throw new IgnitionOnException("Car can`t turn on!");
         }
+
         isIgnitionOn = true;
     }
 
     public void stopEngine() {
-        if (isIgnitionOn) {
-            isIgnitionOn = false;
-        }
+        isIgnitionOn = false;
+
     }
 
 }
