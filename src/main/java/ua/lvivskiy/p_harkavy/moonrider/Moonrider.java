@@ -1,6 +1,6 @@
 package ua.lvivskiy.p_harkavy.moonrider;
 
-import ua.lvivskiy.p_harkavy.moonrider.exception.MoonriderOdoException;
+import ua.lvivskiy.p_harkavy.moonrider.entity.MoonRoad;
 import ua.lvivskiy.p_harkavy.moonrider.exception.MoonriderRefuelingException;
 
 public class Moonrider {
@@ -11,7 +11,7 @@ public class Moonrider {
     // Конструкторы должны быть с перегрузкой (сделать возможность создавать с дефолтными tank fuel volume и fuel consumption
     // Создать 5 машинок (в main-е), заправить их, завести, и заставить проехать разные расстояния,
     // Должно быть 3 класса - Car и OffRoadMain и класс с исключениями
-    // Доделать класс Car методы (refuel, ride, startEngine, stopEngine) c собственніми исключениями (Метод ride должен
+    // Доделать класс Car методы (refuel, ride, startEngine, stopEngine) c собственными исключениями (Метод ride должен
     // бросать исключение (подумать, какое - checked или unchecked, посмотреть иерархию,
     // почитать про них, посмотреть головача на ютубе, (если не хватило бензина на всю дистанцию)
 
@@ -27,19 +27,19 @@ public class Moonrider {
      * psvm and Enter this is hotKeys which add main method
      */
 
-    private static int DEFAULT_TANK_VOLUME = 40;
-    private static int DEFAULT_FUEL_CONSUMPTION = 50;
+    private int DEFAULT_TANK_VOLUME = 40;
+    private int DEFAULT_FUEL_CONSUMPTION = 50;
 
-    private final String make;
+    private String make;
     private String model;
     private String color;
-    private final int fuelConsump = DEFAULT_FUEL_CONSUMPTION;
+    private int fuelConsump = DEFAULT_FUEL_CONSUMPTION;
     private int distance;
-    private final int tankVolume = DEFAULT_TANK_VOLUME;
+    private int tankVolume = DEFAULT_TANK_VOLUME;
 
 
     private boolean isIgnitionOn;
-    private int currFuel;
+    private double currFuel;
     private int odo; //пробег лунохода
 
     /**
@@ -62,11 +62,13 @@ public class Moonrider {
         }
     }
 
-    public Moonrider(MakeModelColor makeModelColor, int distance) {
-        this(makeModelColor, DEFAULT_FUEL_CONSUMPTION, distance, DEFAULT_TANK_VOLUME);
+    /*
+    public Moonrider(MakeModelColor makeModelColor, int distance, double currFuel) {
+        this(makeModelColor, DEFAULT_FUEL_CONSUMPTION, distance, DEFAULT_TANK_VOLUME, currFuel);
     }
+    */
 
-    public Moonrider(MakeModelColor makeModelColor, int fuelConsump, int distance, int tankVolume) {
+    public Moonrider(MakeModelColor makeModelColor, int fuelConsump, int distance, int tankVolume, double currFuel) {
         if (tankVolume < 1) {
             throw new IllegalArgumentException("Volume of tank any moonrider can not be less 1 liter");
         }
@@ -74,12 +76,15 @@ public class Moonrider {
             throw new IllegalArgumentException("Consumption very big - need fix engine");
         }
         if (makeModelColor.color.isEmpty() || makeModelColor.make.isEmpty() || makeModelColor.model.isEmpty() || makeModelColor == null) {
-            throw new IllegalArgumentException("makeModelColor can not be null or empty");
+            throw new IllegalArgumentException("make or model or color can not be null or empty");
         }
         this.make = makeModelColor.make;
         this.model = makeModelColor.model;
         this.color = makeModelColor.color;
+        this.fuelConsump = fuelConsump;
         this.distance = distance;
+        this.tankVolume = tankVolume;
+        this.currFuel = currFuel;
     }
 
     public void setIgnitionOn(boolean ignitionOn) {
@@ -90,79 +95,102 @@ public class Moonrider {
         setIgnitionOn(ignitionOn);
     }
 
+    public void stopEngine() {
+        if (isIgnitionOn) {
+            isIgnitionOn = false;
+        }
+    }
 
     public int getDistance() {
         return distance;
     }
 
-    public void setDistance(int distance) {
-        this.distance = distance;
-    }
-
-    public int getOdo() {
-        return odo;
-    }
-
-    public int getCurrFuel() {
-        return currFuel;
-    }
-
-    public int refuel(int liters) {//return liters which was added to car after refueling (or specified or full tank)
+    public int refuel(int liters) throws MoonriderRefuelingException {//return liters which was added to car after refueling (or specified or full tank)
+        System.out.println();
+        System.out.println("NEXT MOONRIDER PREPARE TO TRIP ON " + getDistance());
         if (liters < 1) {
             throw new IllegalArgumentException("Cant refuel car on liters" + liters);
         }
         if (isIgnitionOn) {
             throw new MoonriderRefuelingException("Can not refuel because IgnitionOn");
         }
-        int freeVolume = tankVolume - currFuel;
+        int freeVolume = (int) (tankVolume - currFuel);
+        System.out.println("Free volume in the tank of this Moonride = " + freeVolume);
         if (liters < freeVolume) {
             currFuel = currFuel + liters;
+            System.out.println("Refueling! Moonrider was refueling on " + liters + " liters and now in the tank " + currFuel);
             return liters;
         } else {
             currFuel = tankVolume;
-            return currFuel;
+            System.out.println("Moonrider was refueling to full tank and now it is " + currFuel + " liters");
+            return (int) currFuel;
         }
     }
 
-    /**
-     * @param road - instance of class {@link Road}, that encapsulates distance and road type.
-     * Road type is a coefficient of fuel consumption,
-     * example: for dirt road car consumes 1.2x of standard consumption,
-     * for highway car consumes 0.9x respectively.
-     * @param rideUntilFuelRunsOut - if 'true', rides  any distance as long as there is fuel
-     * - if 'false' - throws exception, if there's no enough fuel to ride requested distance
-     * todo: Define it!
-     * @return distance was ridden
-     */
-
-
-
-
-
-
-
-
-    //Если да - то это очень неэфективно, ты же сразу модешь понять, на сколько увеличится одо и насколько уменьшится fuelLevel
-
-    public int ride(int distance) { //return km which had been ridden by any moonrider (after ridden 1 km increase odo and decreases currFuel)
-        if (odo > 1000) {
-            throw new MoonriderOdoException("Odo very big - need fix or replace engine");
+    //THIS IS NEW VERSION OF METHOD. THE OLD version: return km which had been ridden by any moonrider
+    public double ride(MoonRoad road, boolean rideUntilFuelRunsOut) throws MoonriderRefuelingException {
+        double ridden = 0.0;
+        double ableRide = currFuel / (fuelConsump * road.getType() / 100);
+        System.out.println("Start move! Note: Before start Moonrider was refueling and now in the tank " +
+                currFuel + " AND for road use rate " + road.getType());
+        //if (road.getType()== roadTypes.get("Gravel_moon_road"))
+        if (road.getDistance() < 0) {
+            throw new IllegalArgumentException("distance can not be <0");
         }
-        currFuel = currFuel - fuelConsump / 100;
-        odo = currFuel / distance;
-
-        for (int i = 0; i < distance; i++) {
-            distance = i;
-
-            if (odo <= 1 / distance) {
-                throw new MoonriderOdoException("Moonrider rover is critical - need replacement or fix engine");
+        if (road.getDistance() == 0) {
+            System.out.println("Ridden distance = " + 0.0 + " because requirement distance is 0");
+        } else if (road.getDistance() <= ableRide) {
+            startEngine(true);
+            ridden = distance;
+            System.out.println("===Moonrider was ridden " + ridden + " km which equals full distance = " + distance);
+            currFuel -= (int) (road.getDistance() * (road.getType() * fuelConsump) / 100);  //9.6 литров при 20 входящих
+            System.out.println("===Moonrider left currFuel " + currFuel + " liters");
+            odo = odo + distance;
+            System.out.println("===Moonrider increase odo on " + odo + " km");
+            stopEngine();
+        } else if (road.getDistance() > ableRide) {
+            if (rideUntilFuelRunsOut == false) {
+                throw new MoonriderRefuelingException("there's no enough fuel to ride requested distance");
             }
-
-            if (currFuel <= 1) {
-                throw new MoonriderRefuelingException("Moonrider current fuel is small - need refuel again");
-            }
+            startEngine(true);
+            ridden = ableRide;
+            System.out.println("===Moonrider has ridden " + ridden + " km because fuel in the tank is finished");
+            odo = (int) (odo + ableRide);
+            System.out.println("===Moonrider increase odo on " + odo + " km and after that fuel in the tank is finished");
+            currFuel = 0;
         }
-
-        return distance;
+        return ridden;
     }
+
+    public double ride(MoonRoad road) throws MoonriderRefuelingException {
+        double ridden = 0.0;
+        double ableRide = currFuel / (fuelConsump * road.getType() / 100);
+        System.out.println("Start move! Note: Before start Moonrider was refueling and now in the tank " +
+                currFuel + " AND for road use rate " + road.getType());
+        if (road.getDistance() < 0) {
+            throw new IllegalArgumentException("distance can not be <0");
+        }
+        if (road.getDistance() == 0) {
+            System.out.println("Ridden distance = " + 0.0 + " because requirement distance is 0");
+        } else if (road.getDistance() <= ableRide) {
+            startEngine(true);
+            ridden = distance;
+            System.out.println("===Moonrider was ridden " + ridden + " km which equals full distance = " + distance);
+            currFuel = (int) (currFuel - road.getDistance() * (road.getType() * fuelConsump) / 100);
+            System.out.println("===Moonrider has left currFuel " + currFuel + " liters");
+            odo = odo + distance;
+            System.out.println("===Moonrider has increased odo on " + odo + " km");
+            stopEngine();
+        } else if (road.getDistance() > ableRide) {
+            startEngine(true);
+            ridden = currFuel / (fuelConsump * road.getType() / 100);
+            System.out.println("===Moonrider has ridden " + ridden + " km because fuel in the tank is finished");
+            odo = (int) (odo + ableRide);
+            System.out.println("===Moonrider increase odo on " + odo + " km and after that fuel in the tank is finished");
+            currFuel = 0;
+        }
+        return ridden;
+    }
+
+
 }
