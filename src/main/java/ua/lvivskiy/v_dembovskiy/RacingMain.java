@@ -1,12 +1,13 @@
 package ua.lvivskiy.v_dembovskiy;
 
 import ua.lvivskiy.v_dembovskiy.car.entity.Car;
+import ua.lvivskiy.v_dembovskiy.car.exeption.IgnitionOffException;
 import ua.lvivskiy.v_dembovskiy.car.exeption.IgnitionOnException;
 import ua.lvivskiy.v_dembovskiy.car.exeption.OutOfFuelException;
 
 public class RacingMain {
 
-    public static void main(String... args) throws IgnitionOnException, OutOfFuelException {
+    public static void main(String... args) throws OutOfFuelException, IgnitionOnException, IgnitionOffException {
         Car.MakesModels makesModels1 = new Car.MakesModels("model", "", 30);
         Car car1 = new Car(makesModels1, 6000, 10, 10, true);
         car1.stopEngine();
