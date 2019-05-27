@@ -59,3 +59,6 @@ nb-configuration.xml
 ## OS X
 ##########################
 .DS_Store
+p.harkavy/src/main/resources/
+v.dembovskiy/pom.xml
+v.dembovskiy/src/main/resources/
