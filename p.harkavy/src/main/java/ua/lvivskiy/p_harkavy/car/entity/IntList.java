@@ -15,7 +15,7 @@ public class IntList {
 
     public int get(int idx) {
         int result;
-        if (idx<=size) {
+        if (idx<size) {
             result = arr[idx];
         }
         else {
