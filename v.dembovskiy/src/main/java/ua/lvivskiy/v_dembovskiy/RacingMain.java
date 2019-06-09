@@ -6,6 +6,9 @@ import ua.lvivskiy.v_dembovskiy.car.exeption.IgnitionOffException;
 import ua.lvivskiy.v_dembovskiy.car.exeption.IgnitionOnException;
 import ua.lvivskiy.v_dembovskiy.car.exeption.OutOfFuelException;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 public class RacingMain {
 
     public static void main(String... args) throws OutOfFuelException, IgnitionOnException, IgnitionOffException {
@@ -37,6 +40,9 @@ public class RacingMain {
         car5.refuel(14.0);
         car5.ride(1000);
         car2.stopEngine();
+        LinkedList list = new LinkedList<>();
+
+
 
 
     }

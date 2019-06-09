@@ -22,7 +22,7 @@ public class IntListTest {
         intList.add(1, 5);
     }
 
-    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void addUsingNegativeIndex() {
         intList.add(0, 1);
         intList.add(-5, 5);

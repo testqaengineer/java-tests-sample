@@ -40,7 +40,7 @@ public class IntList {
         if (idx < 0) {
             throw new IllegalArgumentException("The index can`t be below 0");
         }
-        if (idx > size+1) {
+        if (idx > size) {
             throw new ArrayIndexOutOfBoundsException("The index can`t be below " + idx);
         }
         if (size == arr.length) {
