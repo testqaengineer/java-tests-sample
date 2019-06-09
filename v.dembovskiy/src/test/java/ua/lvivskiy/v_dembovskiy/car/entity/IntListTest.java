@@ -9,44 +9,32 @@ public class IntListTest {
     IntList intList = new IntList();
 
     @Test
-    public void addThousandValues() {
-        for (int a = 0; a < 1000; a++) {
+    public void arrayGrowsCorrectly() {
+        IntList intList = new IntList(1);
+        for (int a = 0; a < 5; a++) {
             intList.add(a);
         }
-        assertEquals(intList.size(), 1000);
+        assertEquals(intList.size(), 5);
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void addUsingIncorrectIndex() {
-        for (int a = 0; a < 10; a++) {
-            intList.add(a);
-        }
-        intList.add(100, 5);
+    public void addWithIllegalIndex() {
+        intList.add(1, 5);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void addUsingNegativeIndex() {
-        for (int a = 0; a < 10; a++) {
-            intList.add(a);
-        }
+        intList.add(0, 1);
         intList.add(-5, 5);
     }
 
     @Test
-    public void addValueByIndex() {
-        for (int a = 0; a < 10; a++) {
-            intList.add(a);
-        }
-        intList.add(5, 77);
-        assertEquals(intList.get(5), 77);
-    }
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void addWithIncorrectIndex() {
-        for (int a = 0; a < 10; a++) {
-            intList.add(a);
-        }
-        intList.add(20, 77);
+    public void addConsecutiveValueByIndex() {
+        intList.add(0, 1);
+        intList.add(1, 2);
+        assertEquals(intList.get(0), 1);
+        assertEquals(intList.get(1), 2);
+        assertEquals(intList.size(), 2);
     }
 
     @Test
@@ -56,7 +44,6 @@ public class IntListTest {
         }
         intList.remove(5);
         assertEquals(intList.get(5), 6);
-
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
@@ -69,28 +56,29 @@ public class IntListTest {
 
     @Test
     public void getValue() {
-        for (int a = 0; a < 10; a++) {
-            intList.add(a + 10);
-        }
-        for (int a = 0; a < 10; a++) {
-            assertEquals(intList.get(a), a + 10);
-        }
+        intList.add(1);
+        assertEquals(intList.get(0), 1);
     }
 
     @Test
     public void size() {
-        for (int a = 0; a < 5; a++) {
-            intList.add(a);
-        }
-        assertEquals(intList.size(), 5);
+        intList.add(1);
+        assertEquals(intList.size(), 1);
     }
 
     @Test
     public void trimToSize() {
-        for (int a = 0; a < 11; a++) {
+        intList.add(1);
+        intList.trimToSize();
+        assertEquals(intList.size(), 1);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void insertInTheMiddle() {
+        for (int a = 0; a < 5; a++) {
             intList.add(a);
         }
-        intList.trimToSize();
-        assertEquals(intList.size(), 11);
+        System.out.println(intList);
+        intList.add(7, 7777);
     }
 }

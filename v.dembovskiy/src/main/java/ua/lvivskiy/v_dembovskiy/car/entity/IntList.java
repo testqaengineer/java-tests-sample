@@ -8,52 +8,51 @@ public class IntList {
     public static final int DEFAULT_CAPACITY = 10;
 
     private int size = 0;
-
     private int[] arr = new int[DEFAULT_CAPACITY];
+    private int[] newArr;
+
+    public IntList() {
+    }
+
+    public IntList(int size) {
+        this.arr = new int[size];
+    }
 
     public void add(int val) {
         if (size < arr.length) {
             arr[size] = val;
             size++;
         } else {
-            int[] arrNew = new int[(int) (size * 1.5)];
-            for (int a = 0; a < arr.length; a++) {
-                arrNew[a] = arr[a];
-            }
-            arr = arrNew;
+            arr = resize(arr);
             arr[size] = val;
             size++;
         }
-        //System.out.println(size);
+    }
+
+    private int[] resize(int[] arr) {
+        int[] newArr = new int[size * 3 / 2 + 1];
+        System.arraycopy(arr, 0, newArr, 0, arr.length);
+
+        return newArr;
     }
 
     public void add(int idx, int val) {
         if (idx < 0) {
             throw new IllegalArgumentException("The index can`t be below 0");
         }
-        if (size < arr.length) {
-            int temp = arr[idx];
-            for (int a = 0; a < arr.length - idx; a++) {
-                arr[size + 1 - a] = arr[size - a];
-            }
-            arr[idx + 1] = temp;
-            arr[idx] = val;
-        } else {
-            int[] arrNew = new int[(int) (size * 1.5)];
-            for (int a = 0; a < arr.length; a++) {
-                arrNew[a] = arr[a];
-            }
-            arr = arrNew;
-            size++;
-
-            int temp = arr[idx];
-            for (int a = 0; a < arr.length - idx; a++) {
-                arr[size + 1 - a] = arr[size - a];
-            }
-            arr[idx + 1] = temp;
-            arr[idx] = val;
+        if (idx > size+1) {
+            throw new ArrayIndexOutOfBoundsException("The index can`t be below " + idx);
         }
+        if (size == arr.length) {
+            arr = resize(arr);
+        }
+        for (int a = 0; a < size - idx+1; a++) {
+            arr[size + 1 - a] = arr[size - a];
+        }
+        arr[idx] = val;
+        size++;
     }
+
 
     public void remove(int idx) {
         if (idx > arr.length) {
@@ -65,8 +64,9 @@ public class IntList {
         size--;
     }
 
+
     public int get(int idx) {
-        if (idx > arr.length) {
+        if (idx >= size) {
             throw new IndexOutOfBoundsException("The idx is more than array size!");
         }
         return arr[idx];
@@ -79,12 +79,9 @@ public class IntList {
 
     public void trimToSize() {
         if (arr.length > size) {
-            int[] arrNew = new int[size];
-            for (int a = 0; a < size; a++) {
-                arrNew[a] = arr[a];
-            }
-            arr = arrNew;
-            size = arrNew.length;
+            int[] newArr = new int[size];
+            System.arraycopy(arr, 0, newArr, 0, newArr.length);
+            arr = newArr;
         }
     }
 
@@ -93,17 +90,26 @@ public class IntList {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         IntList intList = (IntList) o;
-        return size == intList.size &&
-                Arrays.equals(arr, intList.arr);
+
+        return size == intList.size && Arrays.equals(arr, intList.arr);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(size);
         result = 31 * result + Arrays.hashCode(arr);
+
         return result;
+    }
 
+    @Override
+    public String toString() {
 
+        return "IntList{" +
+                "size=" + size +
+                ", arr=" + Arrays.toString(arr) +
+                ", newArr=" + Arrays.toString(newArr) +
+                '}';
     }
 
 
