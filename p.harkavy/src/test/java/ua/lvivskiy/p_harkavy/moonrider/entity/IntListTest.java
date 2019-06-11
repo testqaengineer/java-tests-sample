@@ -166,7 +166,7 @@ public class IntListTest {
     @Test
     public void testAddValueByIndexToNotEmptyList() {
         for (int i=0; i<100; i++) {
-            il.add(i, i++);
+            il.add(i, i);
         }
         il.add(0, -100);
         il.add(99, -99);
@@ -180,7 +180,7 @@ public class IntListTest {
     @Test (expected = IndexOutOfBoundsException.class)
     public void testAddValueByUncorrectIndexToNotEmptyList() {
         for (int i=0; i<100; i++) {
-            il.add(i, i++);
+            il.add(i, i);
         }
         assertEquals(100, il.get(99));
         il.add(100, -100);
@@ -189,22 +189,15 @@ public class IntListTest {
     @Test (expected = IllegalArgumentException.class)
     public void testAddValueByNegativeIndexToNotEmptyList() {
         for (int i=0; i<10; i++) {
-            il.add(i, i++);
+            il.add(i, i);
         }
         il.add(-1, -1);
     }
 
-
-
-
-
-
-
-
     @Test
     public void testRemoveValueByIndexInNotEmptyList() {
         for (int i=0; i<100; i++) {
-            il.add(i, i++);
+            il.add(i, i);
         }
         assertEquals(100, il.get(99));
         il.remove(99);
@@ -214,20 +207,5 @@ public class IntListTest {
         assertEquals(98, il.size());
         assertEquals(97, il.remove(97));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
