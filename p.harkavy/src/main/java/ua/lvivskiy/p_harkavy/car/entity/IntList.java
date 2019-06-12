@@ -30,7 +30,7 @@ public class IntList {
            size++;
        }
        else {
-           int[] newArr=new int[size*3/2];
+           int[] newArr=new int[size*3/2+1];
            System.arraycopy(arr, 0, newArr, 0, size);
            arr=newArr;
            arr[size]=val;
@@ -39,21 +39,20 @@ public class IntList {
     }
 
     public void add(int idx, int val) {
-        if (idx<0) {
-            throw new IllegalArgumentException();
+        if (idx<0||idx > size()+1) {
+            throw new ArrayIndexOutOfBoundsException();
         }
-        if (idx>size) {
-            throw new IndexOutOfBoundsException();
-        }
-        else if (idx==size) {
+        if (size<arr.length) {
+            System.arraycopy(arr, idx, arr, idx+1, size-idx);
             arr[idx]=val;
             size++;
         }
         else {
-            int[] newArr=new int[size*3/2];
+            int[] newArr=new int[size*3/2+1];
+            System.arraycopy(arr, 0, newArr, 0, idx);
             System.arraycopy(arr, idx, newArr, idx+1, size-idx);
+            newArr[idx]=val;
             arr=newArr;
-            arr[idx]=val;
             size++;
         }
     }
