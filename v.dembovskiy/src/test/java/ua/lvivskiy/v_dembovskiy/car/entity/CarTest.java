@@ -8,10 +8,6 @@ import ua.lvivskiy.v_dembovskiy.car.exeption.IgnitionOffException;
 import ua.lvivskiy.v_dembovskiy.car.exeption.IgnitionOnException;
 import ua.lvivskiy.v_dembovskiy.car.exeption.OutOfFuelException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.Assert.*;
 
 @RunWith(JUnitParamsRunner.class)

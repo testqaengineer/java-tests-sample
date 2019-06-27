@@ -1,5 +1,7 @@
 package ua.lvivskiy.v_dembovskiy.car.entity;
 
+
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -15,6 +17,7 @@ public class IntListTest {
             intList.add(a);
         }
         assertEquals(intList.size(), 5);
+        System.out.println("UNIT TESTS !!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
