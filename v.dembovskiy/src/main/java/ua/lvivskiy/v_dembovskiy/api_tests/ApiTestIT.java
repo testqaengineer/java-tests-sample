@@ -1,7 +1,10 @@
-package ua.lvivskiy.v_dembovskiy.APITests;
+package ua.lvivskiy.v_dembovskiy.api_tests;
 
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
+
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
@@ -11,10 +14,13 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 
 
-public class API_TestIT {
+public class ApiTestIT {
+
 
     @BeforeMethod
     public void setup() {
@@ -22,19 +28,55 @@ public class API_TestIT {
     }
 
     @Test
-    public void getPlanet_1FirstExample() throws JSONException {
+    public void getPlanet_1FirstExample() throws JSONException, IOException {
         RequestSpecification httpRequest = RestAssured.given().contentType("application/json");
         Response response = httpRequest.get("planets/1/");
-        JSONObject jsonObject = new JSONObject(response.getBody().asString());
+        ObjectMapper objectMapper = new ObjectMapper();
+        Planet1 parsed = objectMapper.readValue(response.getBody().asString(), new TypeReference<Planet1>() {});
+
+        Planet1 created = new Planet1();
+        created.setName("Tatooine");
+        created.setRotation_period("23");
+        created.setOrbital_period("304");
+        created.setDiameter("10465");
+        created.setClimate("arid");
+        created.setGravity("1 standard");
+        created.setTerrain("desert");
+        created.setSurface_water("1");
+        created.setPopulation("200000");
+        String residents[] = {"https://swapi.co/api/people/1/",
+                "https://swapi.co/api/people/2/",
+                "https://swapi.co/api/people/4/",
+                "https://swapi.co/api/people/6/",
+                "https://swapi.co/api/people/7/",
+                "https://swapi.co/api/people/8/",
+                "https://swapi.co/api/people/9/",
+                "https://swapi.co/api/people/11/",
+                "https://swapi.co/api/people/43/",
+                "https://swapi.co/api/people/62/"};
+        created.setResidents(residents);
+        String films[] = {"https://swapi.co/api/films/5/",
+                "https://swapi.co/api/films/4/",
+                "https://swapi.co/api/films/6/",
+                "https://swapi.co/api/films/3/",
+                "https://swapi.co/api/films/1/"};
+        created.setFilms(films);
+        created.setCreated("2014-12-09T13:50:49.641000Z");
+        created.setEdited("2014-12-21T20:48:04.175778Z");
+        created.setUrl("https://swapi.co/api/planets/1/");
+
         Assert.assertEquals(response.getStatusCode(), 200);
-        Assert.assertEquals(jsonObject.getString("name"), "Tatooine");
-        Assert.assertEquals(jsonObject.getString("rotation_period"), "23");
-        Assert.assertEquals(jsonObject.getString("orbital_period"), "304");
-        Assert.assertEquals(jsonObject.getString("diameter"), "10465");
-        Assert.assertEquals(jsonObject.getString("gravity"), "1 standard");
-        Assert.assertEquals(jsonObject.getString("terrain"), "desert");
-        Assert.assertEquals(jsonObject.getString("surface_water"), "1");
-        Assert.assertEquals(jsonObject.getString("population"), "200000");
+        Assert.assertEquals(parsed, created);
+
+//        JSONObject jsonObject = new JSONObject(response.getBody().asString());
+//        Assert.assertEquals(jsonObject.getString("rotation_period"), "23");
+//        Assert.assertEquals(jsonObject.getString("orbital_period"), "304");
+//        Assert.assertEquals(jsonObject.getString("diameter"), "10465");
+//        Assert.assertEquals(jsonObject.getString("gravity"), "1 standard");
+//        Assert.assertEquals(jsonObject.getString("terrain"), "desert");
+//        Assert.assertEquals(jsonObject.getString("surface_water"), "1");
+//        Assert.assertEquals(jsonObject.getString("population"), "200000");
+
         System.out.println("IT TESTS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
@@ -67,7 +109,6 @@ public class API_TestIT {
                         "terrain", equalTo("desert"),
                         "surface_water", equalTo("1"),
                         "population", equalTo("200000"));
-
     }
 
     @Test
