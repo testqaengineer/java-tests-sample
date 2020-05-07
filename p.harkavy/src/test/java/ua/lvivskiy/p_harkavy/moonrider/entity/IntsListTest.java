@@ -6,7 +6,7 @@ import ua.lvivskiy.p_harkavy.car.entity.IntList;
 
 import static org.junit.Assert.assertEquals;
 
-public class IntListTest {
+public class IntsListTest {
 
     private IntList il;
 
@@ -208,9 +208,9 @@ public class IntListTest {
             System.out.println(il.size());
             il.add(i, a++);
         }
-        assertEquals(100, il.get(99));
+        assertEquals(99, il.get(99));
         il.remove(99);
-        assertEquals(99, il.get(98));
+        assertEquals(98, il.get(98));
         il.remove(0);
         assertEquals(0, il.get(0));
         assertEquals(98, il.size());

@@ -1,16 +1,30 @@
 package ua.lvivskiy;
 
 
+import com.sun.jmx.remote.internal.ArrayQueue;
 
-import java.util.Arrays;
-import java.util.StringJoiner;
+import java.lang.reflect.Array;
+import java.util.*;
 
 /**
- * TODO: watch https://www.youtube.com/watch?v=AxL5LgoQyNs and read about changes in Java 8
- * TODO: read about Java9 CompactString
+ * TODO: read about String	https://www.baeldung.com/java-string-pool and
+ * http://javastudy.ru/interview/strings/
+ * TODO: StringBuffer and StringBuilder practice and StringJoiner
  * testqaengineerautomation@gmail.com  miramusic5555557
  */
-public class Samples {
+
+public class B_FirstLessonPart2 {
+
+        public static void main(String[] args) {
+        }
+
+        /*String s = "234";
+        new Thread(() -> {
+            stringBuilder.append("1").append("2");
+        }).start();
+        new Thread(() -> {
+            stringBuilder.append("3");
+        }).start();*/
 
     private static void stringPool() {
         String s = "abc" + "cda"; //inserted into pool
@@ -67,6 +81,4 @@ public class Samples {
         System.out.println(Arrays.toString(strBytes)); // [115, 116, 114]
     }
 
-    public static void main(String[] args) {
-    }
 }

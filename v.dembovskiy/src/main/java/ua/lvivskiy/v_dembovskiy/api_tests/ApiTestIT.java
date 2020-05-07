@@ -28,7 +28,7 @@ public class ApiTestIT {
     }
 
     @Test
-    public void getPlanet_1FirstExample() throws JSONException, IOException {
+    public void getPlanet_1FirstExample() throws IOException {
         RequestSpecification httpRequest = RestAssured.given().contentType("application/json");
         Response response = httpRequest.get("planets/1/");
         ObjectMapper objectMapper = new ObjectMapper();
@@ -44,7 +44,7 @@ public class ApiTestIT {
         created.setTerrain("desert");
         created.setSurface_water("1");
         created.setPopulation("200000");
-        String residents[] = {"https://swapi.co/api/people/1/",
+        String[] residents = {"https://swapi.co/api/people/1/",
                 "https://swapi.co/api/people/2/",
                 "https://swapi.co/api/people/4/",
                 "https://swapi.co/api/people/6/",
@@ -55,7 +55,7 @@ public class ApiTestIT {
                 "https://swapi.co/api/people/43/",
                 "https://swapi.co/api/people/62/"};
         created.setResidents(residents);
-        String films[] = {"https://swapi.co/api/films/5/",
+        String[] films = {"https://swapi.co/api/films/5/",
                 "https://swapi.co/api/films/4/",
                 "https://swapi.co/api/films/6/",
                 "https://swapi.co/api/films/3/",
@@ -79,6 +79,8 @@ public class ApiTestIT {
 
         System.out.println("IT TESTS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
+
+
 
     @Test
     public void getPlanet_1SecondExample() {
