@@ -1,4 +1,4 @@
-package ua.lvivskiy.p_harkavy.collections_samples;
+package ua.lvivskiy.p_harkavy.collections_samples.tree_samples;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -39,7 +39,7 @@ public class IntsTree implements Collection<Integer> {
         return psevdoRoot;
     }
 
-    public boolean containsNode(int val) {
+    boolean containsNode(int val) {
         return containsNodeRecursive(root, val);
     }
     private boolean containsNodeRecursive(Node current, int val) {
