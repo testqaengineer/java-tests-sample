@@ -1,15 +1,15 @@
-package ua.lvivskiy.p_harkavy.car.entity;
+package ua.lvivskiy.p_harkavy.collections_samples.arraylist_samples;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-public class IntList {
+public class IntsArrayListWithSize {
 
     private static final int DEFAULT_CAPACITY = 10;
     private int size=0;
     private int[] arr = new int[DEFAULT_CAPACITY];
 
-    public int size() {
+    private int size() {
         return size;
     }
 
@@ -48,11 +48,11 @@ public class IntList {
             size++;
         }
         else {
-            int[] newArr=new int[size*3/2+1];
-            System.arraycopy(arr, 0, newArr, 0, idx);
-            System.arraycopy(arr, idx, newArr, idx+1, size-idx);
-            newArr[idx]=val;
-            arr=newArr;
+            int[] tmpArr=new int[size*3/2+1];
+            System.arraycopy(arr, 0, tmpArr, 0, idx);
+            System.arraycopy(arr, idx, tmpArr, idx+1, size-idx);
+            tmpArr[idx]=val;
+            arr=tmpArr;
             size++;
         }
     }
@@ -64,10 +64,10 @@ public class IntList {
         if (idx>=size) {
             throw new IndexOutOfBoundsException();
         }
-        int tmp=arr[idx];
+        int tmpArr=arr[idx];
         System.arraycopy(arr, idx+1, arr, idx, size-idx);
         size--;
-        return tmp;
+        return tmpArr;
     }
 
     public void trimToSize() {
@@ -80,9 +80,9 @@ public class IntList {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IntList intList = (IntList) o;
-        return size == intList.size &&
-                Arrays.equals(arr, intList.arr);
+        IntsArrayListWithSize intsArrayListWithSize = (IntsArrayListWithSize) o;
+        return size == intsArrayListWithSize.size &&
+                Arrays.equals(arr, intsArrayListWithSize.arr);
     }
 
     @Override

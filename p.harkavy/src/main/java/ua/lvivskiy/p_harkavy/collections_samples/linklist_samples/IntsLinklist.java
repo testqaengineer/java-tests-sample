@@ -4,47 +4,93 @@ import java.util.*;
 
 public class IntsLinklist implements List {
 
-
-    private static Node tail = null;
-
+    private Node tail;
     static class Node {
         int val;
         Node next;
-
         Node(int val, Node next) {
             this.val = val;
             this.next = next;
         }
     }
 
-    static Node generateIterableFromTail(int max) {
-        Node result = tail;
-        for (int i = 0; i < max; i++) result = new Node(i, result);
+    Node generateIterableFromTail(int max) {
+        Node result = null;
+        for (int i = 0; i < max; i++) {
+            result = new Node(i, result);
+            System.out.println(" " + result.val);
+        }
         return result;
     }
 
-    public static Node generateIterableFromHead(int max) {
-        tail = new Node(max, null);
+    Node generateIterableFromHead(int max) {
+        Node result = new Node(max, null);
         for (int i = max; i > 0; i--) {
-            tail.next = new Node(i-1, null);
-            tail=tail.next;
+            result.next = new Node(i-1, null);
+            System.out.println(" " + result.val);
+            result=result.next;
+
         }
-        return tail;
+        return result;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        return false;
+    }
+
+    // rec and iter - how many elements in list?
+    public int size(Node tail) {
+        return 0;
+    }
+
+    // rec and iter - how much sum all elements in list?
+    public int sum(Node tail) {
+        return 0;
+    }
+
+    // rec and iter - where max from all elements in list?
+    public int max(Node tail) {
+        return 0;
     }
 
 
-    Node add(Integer i) {
+
+    // rec OR iter - go from head to tail and add to the end new Node with elem
+    void add(int index, Integer element) {
         if (tail == null) {
-            tail = new Node(i, tail);
-            return tail;
+            tail = new Node(element, tail);
+
         }
         else {
-            tail = new Node(i, tail);
-            tail = tail.next;
+            tail = new Node(element, tail);
+            //tail = tail.next;
         }
-        return tail;
+
+    }
+    // Retrieves and removes the head (first element) of this list.
+    public Object remove() {
+        return null;
     }
 
+    // rec OR iter - go from head to tail and remove last elem
+    Node add(Node indxNode, int index, int elem) {
+        return null;
+    }
+
+    // rec OR iter - go from head to tail and remove elem with index
+    public Object remove(Node indxNode, int index) {
+        return null;
+    }
+
+
+
+
+
+    @Override
+    public boolean contains(Object o) {
+        return false;
+    }
 
     @Override
     public int size() {
@@ -56,10 +102,7 @@ public class IntsLinklist implements List {
         return false;
     }
 
-    @Override
-    public boolean contains(Object o) {
-        return false;
-    }
+
 
     @Override
     public Iterator iterator() {
@@ -76,10 +119,7 @@ public class IntsLinklist implements List {
         return false;
     }
 
-    @Override
-    public boolean remove(Object o) {
-        return false;
-    }
+
 
     @Override
     public boolean addAll(Collection c) {
@@ -130,6 +170,7 @@ public class IntsLinklist implements List {
     public Object remove(int index) {
         return null;
     }
+
 
     @Override
     public int indexOf(Object o) {

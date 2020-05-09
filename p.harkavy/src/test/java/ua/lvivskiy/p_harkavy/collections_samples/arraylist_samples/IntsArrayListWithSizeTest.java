@@ -1,18 +1,18 @@
-package ua.lvivskiy.p_harkavy.moonrider.entity;
+package ua.lvivskiy.p_harkavy.collections_samples.arraylist_samples;
 
 import org.junit.Before;
 import org.junit.Test;
-import ua.lvivskiy.p_harkavy.car.entity.IntList;
+import ua.lvivskiy.p_harkavy.collections_samples.arraylist_samples.IntsArrayListWithSize;
 
 import static org.junit.Assert.assertEquals;
 
-public class IntsListTest {
+public class IntsArrayListWithSizeTest {
 
-    private IntList il;
+    private IntsArrayListWithSize il;
 
     @Before
     public void setUp() {
-        il = new IntList();
+        il = new IntsArrayListWithSize();
     }
 
     @Test
