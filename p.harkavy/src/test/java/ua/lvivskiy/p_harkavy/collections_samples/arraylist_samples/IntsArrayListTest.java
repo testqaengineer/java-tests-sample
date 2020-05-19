@@ -16,25 +16,35 @@ public class IntsArrayListTest {
     }
 
     @Test
-    public void checkCorrectnessOfAddedElements() {
-        assertEquals(arrList.data[0], 1);
-        assertEquals(arrList.data[1], 2);
-        assertEquals(arrList.data[2], 0);
+    public void checkCorrectnessOfAddedElementsToTail() {
+        assertEquals(1, arrList.get(0).intValue());
+        assertEquals(2, arrList.get(1).intValue());
     }
 
     @Test
-    public void add1() {
-        arrList.add(6, 7);
-        for (int i=0; i<12; i++) {
-            arrList.data[i]=i;
-        }
+    public void checkCorrectnessOfRemoveElementsFromTail() {
+        arrList.remove();
+        arrList.add(200);
+        assertEquals(200, arrList.get(1).intValue());
     }
 
     @Test
-    public void remove() {
+    public void checkCorrectnessOfAddedElementsToAnyWhere() {
+        arrList.add(3);
+        arrList.add(4);
+
+        arrList.add(4, 170);
+        arrList.add(0, 170);
+        arrList.add(3, 170);
+
+        assertEquals(170, arrList.get(4).intValue());
+        assertEquals(170, arrList.get(0).intValue());
+        assertEquals(170, arrList.get(3).intValue());
     }
 
     @Test
-    public void remove1() {
+    public void checkCorrectnessOfRemoveElementsFromAnyWhere() {
+
+
     }
 }

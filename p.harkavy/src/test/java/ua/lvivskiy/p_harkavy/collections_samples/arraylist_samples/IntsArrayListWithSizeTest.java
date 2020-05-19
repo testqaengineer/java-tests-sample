@@ -15,6 +15,12 @@ public class IntsArrayListWithSizeTest {
         il = new IntsArrayListWithSize();
     }
 
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void testSizeOfBottleNeck() {
+        assertEquals(0, il.size());
+        il.add(1, 100);
+    }
+
     @Test
     public void testSizeOfNewList() {
         assertEquals(0, il.size());
@@ -45,7 +51,7 @@ public class IntsArrayListWithSizeTest {
 
     @Test
     public void testSizesOfOneTimeIncreasedLists() {
-        for (int i=0; i<15; i++) {
+        for (int i = 0; i < 15; i++) {
             il.add(i);
         }
         assertEquals(15, il.size());
@@ -53,24 +59,14 @@ public class IntsArrayListWithSizeTest {
 
     @Test
     public void testSizeOfVeryBigList() {
-        for (int i=0; i<150; i++) {
+        for (int i = 0; i < 150; i++) {
             il.add(i);
         }
         assertEquals(150, il.size());
     }
 
 
-
-
-
-
-
-
-
-
-
-
-    @Test (expected = IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testGetValueOfIndexFromEmptyList() {
         il.get(0);
     }
@@ -85,7 +81,7 @@ public class IntsArrayListWithSizeTest {
 
     @Test
     public void testGetCorrectValueOfIndexAfterIncreaseList() {
-        for (int i=0; i<15; i++) {
+        for (int i = 0; i < 15; i++) {
             il.add(i);
         }
         assertEquals(14, il.get(14));
@@ -93,38 +89,29 @@ public class IntsArrayListWithSizeTest {
 
     @Test
     public void testGetCorrectValueOfIndexBigList() {
-        for (int i=0; i<150; i++) {
+        for (int i = 0; i < 150; i++) {
             il.add(i);
         }
         assertEquals(149, il.get(149));
     }
 
-    @Test (expected = IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testGetValueOfIncorrectIndex() {
         il.get(10);
     }
 
-    @Test (expected = IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testGetUnCorrectValueOfIndexBigList() {
-        for (int i=0; i<150; i++) {
+        for (int i = 0; i < 150; i++) {
             il.add(i);
         }
         il.get(150);
     }
 
 
-
-
-
-
-
-
-
-
-
     @Test
     public void testAdd1500Value() {
-        for (int i=0; i<1500; i++) {
+        for (int i = 0; i < 1500; i++) {
             il.add(i);
         }
         assertEquals(1500, il.size());
@@ -135,7 +122,7 @@ public class IntsArrayListWithSizeTest {
     @Test //(expected = IndexOutOfBoundsException.class)
     public void testAdd50UncorrectValue() {
         il.add('1');
-        for (int i=1; i<50; i++) {
+        for (int i = 1; i < 50; i++) {
             il.add('f');
         }
         assertEquals(50, il.size());
@@ -143,18 +130,9 @@ public class IntsArrayListWithSizeTest {
     }
 
 
-
-
-
-
-
-
-
-
-
     @Test
     public void testAddManySameValuesByIndex() {
-        for (int i=0; i<300; i++) {
+        for (int i = 0; i < 300; i++) {
             il.add(i, 77);
         }
         assertEquals(300, il.size());
@@ -165,7 +143,7 @@ public class IntsArrayListWithSizeTest {
 
     @Test
     public void testAddValueByIndexToNotEmptyList() {
-        for (int i=0; i<100; i++) {
+        for (int i = 0; i < 100; i++) {
             il.add(i, i++);
         }
         il.add(0, -100);
@@ -177,34 +155,28 @@ public class IntsArrayListWithSizeTest {
         assertEquals(-99, il.get(99));
     }
 
-    @Test (expected = IndexOutOfBoundsException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void testAddValueByUncorrectIndexToNotEmptyList() {
-        for (int i=0; i<100; i++) {
+        for (int i = 0; i < 100; i++) {
             il.add(i, i++);
         }
         assertEquals(100, il.get(99));
         il.add(100, -100);
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testAddValueByNegativeIndexToNotEmptyList() {
-        for (int i=0; i<10; i++) {
+        for (int i = 0; i < 10; i++) {
             il.add(i, i++);
         }
         il.add(-1, -1);
     }
 
 
-
-
-
-
-
-
     @Test
     public void testRemoveValueByIndexInNotEmptyList() {
         int a = 0;
-        for (int i=0; i<100; i++) {
+        for (int i = 0; i < 100; i++) {
             System.out.println(il.size());
             il.add(i, a++);
         }
@@ -216,20 +188,6 @@ public class IntsArrayListWithSizeTest {
         assertEquals(98, il.size());
         assertEquals(97, il.remove(97));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

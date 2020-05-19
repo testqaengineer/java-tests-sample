@@ -9,11 +9,11 @@ public class IntsArrayListWithSize {
     private int size=0;
     private int[] arr = new int[DEFAULT_CAPACITY];
 
-    private int size() {
+    int size() {
         return size;
     }
 
-    public int get(int idx) {
+    int get(int idx) {
         int result;
         if (idx<size) {
             result = arr[idx];
@@ -30,9 +30,9 @@ public class IntsArrayListWithSize {
            size++;
        }
        else {
-           int[] newArr=new int[size*3/2+1];
-           System.arraycopy(arr, 0, newArr, 0, size);
-           arr=newArr;
+           int[] tmpArr=new int[size*3/2+1];
+           System.arraycopy(arr, 0, tmpArr, 0, size);
+           arr=tmpArr;
            arr[size]=val;
            size++;
        }
@@ -57,7 +57,7 @@ public class IntsArrayListWithSize {
         }
     }
 
-    public int remove (int idx) {
+    int remove (int idx) {
         if (idx<0) {
             throw new IllegalArgumentException();
         }
