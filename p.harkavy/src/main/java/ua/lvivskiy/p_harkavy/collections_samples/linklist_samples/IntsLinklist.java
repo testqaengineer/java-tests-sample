@@ -19,9 +19,34 @@ public class IntsLinklist implements List<Integer> {
 
     private int size = 0;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IntsLinklist integers = (IntsLinklist) o;
+        if (size != integers.size) {
+            return false;
+        }
+        Node ref1 = this.head;
+        Node ref2 = integers.head;
+        while (ref1 != null) {
+            if (ref1.val != ref2.val) {
+                return false;
+            }
+            ref1 = ref1.next;
+            ref2 = ref2.next;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tail, head, size);
+    }
+
     /**
      * @IvanGolovach labs
-     * */
+     */
     Node generateIterableFromHead(int max) {
         head = null;
         for (int i = 0; i < max; i++) {
@@ -31,6 +56,7 @@ public class IntsLinklist implements List<Integer> {
         }
         return head;
     }
+
     Node generateIterableFromTail(int max) {
         tail = new Node(max, null);
         for (int i = max; i > 0; i--) {
@@ -41,9 +67,11 @@ public class IntsLinklist implements List<Integer> {
         }
         return tail;
     }
+
     public long dimension() {
         return size(head);
     }
+
     // rec and iter - how many elements in list?
     private int size(Node head) {
         if (head == null) return 0;
@@ -57,9 +85,11 @@ public class IntsLinklist implements List<Integer> {
         }
         return size;
     }
+
     int sum() {
         return sum(head);
     }
+
     // rec and iter - how much sum all elements in list?
     private int sum(Node head) {
         int sum = 0;
@@ -73,9 +103,11 @@ public class IntsLinklist implements List<Integer> {
         }
         return sum;
     }
+
     int max() {
         return max(tail);
     }
+
     // rec and iter - where max it is maxValue from all Nodes in list?
     private int max(Node head) {
         int max = 0;
@@ -91,6 +123,7 @@ public class IntsLinklist implements List<Integer> {
         System.out.println(max);
         return max;
     }
+
     // rec and iter - add newNode with elem to tail/head of list?
     public void add(Node newNode, int elem) {
     }
@@ -110,14 +143,14 @@ public class IntsLinklist implements List<Integer> {
     }
 
 
-
     /**
      * @IvanKushn&&PaulGrk homeworks
-     * */
+     */
     @Override
     public int size() {
         return size;
     }
+
     @Override
     public boolean add(Integer element) {
         Node node = new Node(element, null);
@@ -131,6 +164,7 @@ public class IntsLinklist implements List<Integer> {
         size++;
         return true;
     }
+
     @Override
     public void add(int index, Integer element) {
         if (index > size && index < 0) {
@@ -145,12 +179,14 @@ public class IntsLinklist implements List<Integer> {
         ref.next = node;
         size++;
     }
+
     @Override
     public Integer set(int index, Integer element) {
         add(index, element);
-        remove(index+1);
+        remove(index + 1);
         return element;
     }
+
     @Override
     public Integer get(int index) {
         if (index > size && index < 0) {
@@ -162,88 +198,110 @@ public class IntsLinklist implements List<Integer> {
         }
         return ref.val;
     }
+
     @Override
     public Integer remove(int index) {
         if (index > size && index < 0) {
             throw new IndexOutOfBoundsException("Index: " + index);
         }
+        if (index == 0) {
+            int deleted = head.val;
+            head = head.next;
+            size--;
+            return deleted;
+        }
         Node ref = head;
-        for (int i = 0; i < index-1; i++) {
+        for (int i = 0; i < index - 1; i++) {
             ref = ref.next;
         }
-        Node deleted=ref;
-        ref.next=ref.next.next;
+        Node deleted = ref.next;
+        ref.next = deleted.next;
         size--;
         return deleted.val;
     }
+
     @Override
     public boolean remove(Object o) {
-        if (o==null) {
-            throw new NullPointerException("Object is: " + null);
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof Integer)) {
+            return false;
         }
         Node ref = head;
+        Integer io = (Integer) o;
         for (int i = 0; i < size(); i++) {
-            ref = ref.next;
-            if (ref.equals(o)) {
-                ref.next=ref.next.next;
+            //ref = ref.next;
+            if (ref.val == io) {
+                ref.next = ref.next.next;
                 size--;
                 return true;
             }
         }
         return false;
     }
+
     @Override
     public boolean contains(Object o) {
-        if (o==null) {
-            throw new NullPointerException("Object is: " + o);
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof Integer)) {
+            return false;
         }
         Node ref = head;
-        for (int i = 0; i < size(); i++) {
+        Integer io = (Integer) o;
+        for (int i = 0; i < size() - 1; i++) {
             ref = ref.next;
-            if (ref.equals(o)) {
+            if (ref.val == io) {
                 return true;
             }
         }
         return false;
     }
+
     @Override
     public boolean isEmpty() {
         return this.size == 0;
     }
+
     @Override
     public int indexOf(Object o) {
-        if (o==null) {
+        if (o == null) {
             throw new NullPointerException("Object is: " + o);
         }
-        int index=0;
+        int index = 0;
         Node ref = head;
         for (int i = 0; i < size(); i++) {
             ref = ref.next;
             if (ref.equals(o)) {
-                index=i;
+                index = i;
             }
         }
         return index;
     }
+
     @Override
     public int lastIndexOf(Object o) {
-        if (o==null) {
+        if (o == null) {
             throw new NullPointerException("Object is: " + o);
         }
-        int index=0;
+        int index = 0;
         Node ref = tail;
         for (int i = size(); i > 0; i--) {
             ref = ref.next;
             if (ref.equals(o)) {
-                index=i;
+                index = i;
             }
         }
         return index;
     }
+
     @Override
     public void clear() {
 
     }
+
     @Override
     public Iterator iterator() {
         return null;
@@ -256,6 +314,10 @@ public class IntsLinklist implements List<Integer> {
 
     @Override
     public boolean addAll(Collection c) {
+        /*Iterator iterator = c.iterator();
+        while (iterator.hasNext()) {
+            //this.add(iterator.next())
+        }*/
         return false;
     }
 
@@ -307,10 +369,10 @@ public class IntsLinklist implements List<Integer> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
-        Node ref=head;
-        while (ref!=null) {
+        Node ref = head;
+        while (ref != null) {
             sb.append(ref.val).append(" ");
-            ref=ref.next;
+            ref = ref.next;
         }
         sb.append("]");
         return sb.toString();

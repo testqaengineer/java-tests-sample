@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 
 public class IntsLinklistTest {
@@ -56,21 +56,51 @@ public class IntsLinklistTest {
         intsLinklist.add(3);
         intsLinklist.add(4);
         assertEquals(5, intsLinklist.size());
-        intsLinklist.remove(2);
+        //intsLinklist.remove(0);
+        System.out.println(intsLinklist.toString());
+        intsLinklist.remove(4);
+        assertEquals(4, intsLinklist.size());
+        //assertEquals((Integer) 2, intsLinklist.remove(1));
+        System.out.println(intsLinklist.toString());
+    }
+
+    @Test
+    public void testOfRemovingFromMiddleByLastIndexAndSize() {
+        intsLinklist.add(3);
+        intsLinklist.add(4);
+        assertEquals(5, intsLinklist.size());
+        intsLinklist.remove(4);
         assertEquals(4, intsLinklist.size());
         System.out.println(intsLinklist.toString());
-        assertEquals(3, intsLinklist.get(2).intValue());
+        assertEquals(3, intsLinklist.get(3).intValue());
+        assertFalse(intsLinklist.contains(4));
+        assertTrue(intsLinklist.contains(2));
+        assertTrue(intsLinklist.contains(0));
+        assertTrue(intsLinklist.contains(3));
+    }
+
+    @Test
+    public void testOfRemovingFromMiddleByFirstIndexAndSize() {
+        intsLinklist.add(3);
+        intsLinklist.add(4);
+        assertEquals(5, intsLinklist.size());
+        intsLinklist.remove(0);
+        assertEquals(4, intsLinklist.size());
+        System.out.println(intsLinklist.toString());
+        assertFalse(intsLinklist.contains(4));
+        assertTrue(intsLinklist.contains(2));
+        assertTrue(intsLinklist.contains(0));
+        assertTrue(intsLinklist.contains(3));
     }
 
     @Test
     public void testOfRemovingFromMiddleByObjectAndSize() {
         intsLinklist.add(300);
         intsLinklist.add(400);
-   //     intsLinklist.remove(Integer (300));
+        intsLinklist.remove( (Integer) 300);
         System.out.println(intsLinklist.toString());
         assertEquals(4, intsLinklist.size());
-        //System.out.println(intsLinklist.toString());
-        //assertEquals(3, intsLinklist.get(2).intValue());
+        assertEquals(400, intsLinklist.get(3).intValue());
     }
 
     @Test
