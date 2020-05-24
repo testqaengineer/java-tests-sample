@@ -16,7 +16,7 @@ public class EasyTasksTest {
     private int[] firstArr =
             {2, 0, 57, 6, 67, 1, 11, -99, 43, 51, 60, 20, 72, 33, 67, -3, -5, -15};
     private int[] secondArr =
-            {2, 0, 57, 6, 67, 1, 11, -99, 43, 51, 60, 20, 72, 33, 67, -3, -5, -15};
+            {0, 57, 6, 67, 1, 11, -99, 43, 51, 60, 20, 2, 72, 33, 67, -3, -5, -15};
 
     @Before
     public void setup() {
@@ -31,18 +31,23 @@ public class EasyTasksTest {
     }
 
     @Test
-    public void checkArrUsingMyStupidMethod() {
+    public void checkUnicUsingMyStupidMethod() {
         et.arrUnicUsingMyStupidMethod(arr);
     }
 
     @Test
-    public void checkCorrectnessArrsOld() {
+    public void checkWithUnicValue() {
         et.arrWithUnicValue(arr);
     }
 
     @Test
-    public void checkCorrectnessArrsNewWithJava8() {
+    public void checkUnicWithJava8() {
         et.arrUnicWithJava8(arr);
+    }
+
+    @Test
+    public void checkUnicValueInSameOrder() {
+        et.arrUnicValueInSameOrder(arr);
     }
 
     @Test

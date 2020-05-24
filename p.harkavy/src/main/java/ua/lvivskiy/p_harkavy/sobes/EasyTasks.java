@@ -87,6 +87,19 @@ class EasyTasks {
         System.out.println(Arrays.toString(noDuplicates));
         return noDuplicates;
     }
+    int[] arrUnicValueInSameOrder(int[] originalArr) {
+        Integer[] integ = Arrays.stream(originalArr).boxed().toArray( Integer[]::new );
+        Set<Integer> set = new LinkedHashSet<>(Arrays.asList(integ));
+        System.out.println("length resultArr = " + set.size());
+        System.out.println("length resultArr = " + set.toArray());
+        Integer[] resArray = new Integer[set.size()];
+        int[] intArray = Arrays
+                .stream(set.toArray(resArray))
+                .mapToInt(Integer::intValue).toArray();
+        System.out.println(Arrays.toString(intArray));
+        return intArray;
+    }
+
 
     /*7.3 - есть два массива одинаковых по длине и по-содержимому - каждый из них
     рандомно перемешивают, из одного из них удаляют 1 элемент в любом месте.
@@ -103,13 +116,16 @@ class EasyTasks {
         //List<Integer> myList1 = new ArrayList<>(mp1.keySet());
         Map<Integer, Integer> mp2 = new HashMap<>();
         System.out.println("length originalArr = " + secondArr.length);
-        for (int i1 : secondArr) {
-            if (mp2.containsKey(i1)) {
-                mp2.put(i1, mp2.get(i1) + 1);
-            } else mp2.put(i1, 1);
+        for (int i = 0; i < secondArr.length; i++) {
+            if (mp2.containsKey(secondArr[i])) {
+                mp2.put(secondArr[i], mp2.get(secondArr[i]) + 1);
+            } else mp2.put(secondArr[i], 1);
         }
-        return mp1.entrySet().containsAll(mp2.entrySet())
-                && mp2.entrySet().containsAll(mp1.entrySet());
+        if (  mp1.entrySet().containsAll(mp2.entrySet())
+                && mp2.entrySet().containsAll(mp1.entrySet()) ) {
+            return true;
+        }
+        return false;
     }
 
 }
