@@ -51,6 +51,11 @@ class EasyTasks {
             }
         }
         List<Integer> myList = new ArrayList<>(mp.keySet());
+        /*Set<Map.Entry<Integer, Integer>> me = mp.entrySet();
+        me.
+
+        List<Map.Entry<Integer, Integer>> myList2
+                = new ArrayList<Map.Entry<Integer, Integer>>(mp.entrySet());*/
         int[] resArray = new int[myList.size()];
         for (int i=0; i<myList.size(); i++) {
             int val = myList.get(i);

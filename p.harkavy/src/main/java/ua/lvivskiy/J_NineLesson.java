@@ -51,12 +51,39 @@ public class J_NineLesson {
             System.out.println(count(c, 2));
         }
 
-        Object a = new Object();
-        Object b = null;
+        //Object a = new Object();
+        //Object b = null;
+        //System.out.println(a.equals(b)); //false
+        //System.out.println(b.equals(a)); //NPE
 
-        System.out.println(a.equals(b)); //false
-        System.out.println(b.equals(a)); //NPE
 
+        List<String> ls = new ArrayList<>();
+        ls.add("Ivan");
+        ls.add("Vova");
+        ls.add("Pasha");
+        ls.add("Kristina");
+        ls.add("Iren");
+        ls.add("Ivan2");
+        Iterator iter = ls.iterator();
+        ListIterator liter = ls.listIterator();
+
+        liter.
+
+        int cnt = 0;
+        while (iter.hasNext()) {
+            System.out.println(
+                    iter.next()
+            );
+            cnt++;
+            if (cnt == 2) {
+                //ls.add("Kristina");
+                //ls.set(6, "Ivan3");
+                iter.remove();
+            }
+        }
+        System.out.println(
+                ls
+        );
     }
 
     private static long count(Collection<Integer> ints, int treshold) {
@@ -68,9 +95,6 @@ public class J_NineLesson {
         }
         return count;
     }
-
-
-
 
 
 }
